@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Bebas Neue', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+
+  --color-acid: #C8FF00;
+  --color-void: #0A0A0A;
+  --color-slate: #1A1A2E;
+  --color-ember: #FF4500;
+  --color-neon: #00FFD1;
+  --color-paper: #F5F0E8;
+  --color-muted: #888;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-void);
+  color: var(--color-paper);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: #C8FF00; border-radius: 3px; }
+
+/* Card flip */
+.perspective { perspective: 1000px; }
+.preserve-3d { transform-style: preserve-3d; }
+.backface-hidden { backface-visibility: hidden; }
+.rotate-y-180 { transform: rotateY(180deg); }
+
+/* Noise overlay */
+.noise::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  z-index: 9999;
+}
+
+/* Progress bar */
+.step-active { color: var(--color-acid); border-color: var(--color-acid); }
+.step-done { background-color: var(--color-acid); color: var(--color-void); }
+.step-inactive { border-color: #333; color: #555; }
+
+/* Input styles */
+.input-field {
+  @apply w-full bg-transparent border border-white/10 rounded-none px-4 py-3 text-paper placeholder-white/20 font-body text-sm focus:outline-none focus:border-acid transition-colors duration-200;
+}
+
+.input-field:focus {
+  box-shadow: 0 0 0 1px var(--color-acid);
+}
+
+select.input-field option {
+  background-color: #1A1A2E;
+  color: #F5F0E8;
+}
+
+/* Button */
+.btn-primary {
+  @apply bg-acid text-void font-display tracking-widest text-lg px-8 py-3 hover:bg-white transition-colors duration-200 disabled:opacity-40 disabled:cursor-not-allowed;
+}
+
+.btn-secondary {
+  @apply border border-white/20 text-white/60 font-body text-sm px-6 py-3 hover:border-white/40 hover:text-white transition-colors duration-200;
+}
+
+/* Card game */
+.card-container {
+  perspective: 800px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+/* MCQ option */
+.mcq-option {
+  @apply border border-white/10 px-4 py-3 text-sm font-body text-white/70 cursor-pointer transition-all duration-200 flex items-start gap-3;
+}
+
+.mcq-option:hover {
+  @apply border-white/30 text-white;
+}
+
+.mcq-option.selected {
+  border-color: var(--color-acid);
+  color: var(--color-acid);
+  background-color: rgba(200, 255, 0, 0.05);
+}
+
+/* Animation utilities */
+@keyframes slideIn {
+  from { transform: translateX(40px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from { transform: translateY(16px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slide-in { animation: slideIn 0.4s ease-out; }
+.animate-fade-up { animation: fadeUp 0.4s ease-out; }
+.animate-fade-up-delay-1 { animation: fadeUp 0.4s ease-out 0.1s both; }
+.animate-fade-up-delay-2 { animation: fadeUp 0.4s ease-out 0.2s both; }
+.animate-fade-up-delay-3 { animation: fadeUp 0.4s ease-out 0.3s both; }
